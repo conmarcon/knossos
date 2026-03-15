@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knossos - The Palace of Legends</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --knossos-red: #8b0000;
+            --parchment: #fdf5e6;
+            --stone: #4a4a4a;
+            --gold: #c5a059;
+        }
+
+        body {
+            background-color: #222;
+            color: var(--stone);
+            font-family: 'Lora', serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .museum-card {
+            background-color: var(--parchment);
+            max-width: 600px;
+            width: 90%;
+            margin: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid var(--gold);
+            position: relative;
+        }
+
+        /* Διακοσμητικό πλαίσιο */
+        .museum-card::before {
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1px solid var(--gold);
+            pointer-events: none;
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--knossos-red);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: var(--knossos-red);
+            margin: 0;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+        }
+
+        .language-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .flag {
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.2s;
+            filter: grayscale(40%);
+        }
+
+        .flag:hover, .flag.active {
+            transform: scale(1.3);
+            filter: grayscale(0%);
+        }
+
+        /* Στυλ για την Εικόνα */
+        .museum-image-container {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .museum-image {
+            max-width: 100%;
+            height: auto;
+            border: 3px solid #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-radius: 2px;
+        }
+
+        /* Λεζάντα εικόνας */
+        .image-caption {
+            font-size: 0.8rem;
+            font-style: italic;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .content-section {
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: var(--knossos-red);
+            font-size: 1.2rem;
+            border-left: 4px solid var(--knossos-red);
+            padding-left: 10px;
+            margin-top: 30px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-style: italic;
+            color: #777;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--gold);
+            padding-top: 20px;
+        }
+
+        .highlight {
+            color: var(--knossos-red);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="museum-card">
+    <header>
+        <h1 id="main-title">Knossos</h1>
+        <div class="language-switcher">
+            <span class="flag active" onclick="setLanguage('en')" title="English">🇬🇧</span>
+            <span class="flag" onclick="setLanguage('el')" title="Ελληνικά">🇬🇷</span>
+            <span class="flag" onclick="setLanguage('de')" title="Deutsch">🇩🇪</span>
+            <span class="flag" onclick="setLanguage('fr')" title="Français">🇫🇷</span>
+            <span class="flag" onclick="setLanguage('it')" title="Italiano">🇮🇹</span>
+        </div>
+    </header>
+
+    <div class="museum-image-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Knossos_-_North_Entrance.jpg/640px-Knossos_-_North_Entrance.jpg" alt="The Palace of Knossos" class="museum-image">
+        <div class="image-caption" id="image-caption">The Palace of Knossos, North Entrance</div>
+    </div>
+
+    <div class="content-section">
+        <p id="intro" class="highlight"></p>
+        
+        <h2 id="title-labyrinth">The Labyrinth</h2>
+        <p id="text-labyrinth"></p>
+
+        <h2 id="title-discovery">The Discovery</h2>
+        <p id="text-discovery"></p>
+    </div>
+
+    <div class="footer" id="footer-text">
+        Crete - Where legend meets history.
+    </div>
+</div>
+
+<script>
+    const data = {
+        en: {
+            title: "Knossos: Palace of Legends",
+            intro: "Welcome to the cradle of European civilization. The oldest city in Europe and the heart of the Minoan world.",
+            labTitle: "The Myth of the Labyrinth",
+            labText: "Legend says King Minos built a maze to house the Minotaur. Only Theseus, guided by Ariadne's thread, found his way out of this complex structure.",
+            discTitle: "Architecture & Art",
+            discText: "With 1,300 rooms connected by corridors, the palace featured advanced drainage systems and stunning frescoes like the 'Prince of the Lilies'.",
+            caption: "The Palace of Knossos, North Entrance",
+            footer: "Crete - Where legend meets history."
+        },
+        el: {
+            title: "Κνωσός: Το Παλάτι των Θρύλων",
+            intro: "Καλώς ήρθατε στην κοιτίδα του Ευρωπαϊκού πολιτισμού. Την αρχαιότερη πόλη της Ευρώπης και την καρδιά του Μινωικού κόσμου.",
+            labTitle: "Ο Μύθος του Λαβυρίνθου",
+            labText: "Ο θρύλος λέει ότι ο Μίνωας έχτισε έναν λαβύρινθο για τον Μινώταυρο. Μόνο ο Θησέας, με τον Μίτο της Αριάδνης, βρήκε την έξοδο.",
+            discTitle: "Αρχιτεκτονική & Τέχνη",
+            discText: "Με 1.300 δωμάτια, το ανάκτορο διέθετε προηγμένα συστήματα αποχέτευσης και εκπληκτικές τοιχογραφίες όπως ο 'Πρίγκιπας με τα Κρίνα'.",
+            caption: "Το Ανάκτορο της Κνωσού, Βόρεια Είσοδος",
+            footer: "Κρήτη - Εκεί που ο θρύλος συναντά την ιστορία."
+        },
+        de: {
+            title: "Knossos: Palast der Legenden",
+            intro: "Willkommen in der Wiege der europäischen Zivilisation. Die älteste Stadt Europas und das Herz der minoischen Welt.",
+            labTitle: "Der Mythos vom Labyrinth",
+            labText: "Die Legende besagt, dass König Minos ein Labyrinth baute, um den Minotaurus zu beherbergen. Nur Theseus fand mit Ariadnes Faden den Weg hinaus.",
+            discTitle: "Architektur & Kunst",
+            discText: "Mit 1.300 Zimmern verfügte der Palast über fortschrittliche Abwassersysteme und prächtige Fresken wie den 'Lilienprinzen'.",
+            caption: "Der Palast von Knossos, Nordeingang",
+            footer: "Kreta - Wo Legende auf Geschichte trifft."
+        },
+        fr: {
+            title: "Cnossos : Le Palais des Légendes",
+            intro: "Bienvenue au berceau de la civilisation européenne. La plus ancienne ville d'Europe et le cœur du monde minoen.",
+            labTitle: "Le Mythe du Labyrinthe",
+            labText: "La légende raconte que le roi Minos a construit un labyrinthe pour le Minotaure. Seul Thésée, guidé par le fil d'Ariane, a trouvé la sortie.",
+            discTitle: "Architecture & Art",
+            discText: "Avec 1 300 pièces, le palais disposait de systèmes de drainage avancés et de fresques éblouissantes comme le 'Prince aux lys'.",
+            caption: "Le palais de Cnossos, entrée nord",
+            footer: "Crète - Là où la légende rencontre l'histoire."
+        },
+        it: {
+            title: "Cnosso: Il Palazzo delle Leggende",
+            intro: "Benvenuti nella culla della civiltà europea. La città più antica d'Europa e il cuore del mondo minoico.",
+            labTitle: "Il Mito del Labirinto",
+            labText: "La leggenda narra che il re Minosse costruì un labirinto per il Minotauro. Solo Teseo, guidato dal filo di Arianna, trovò la via d'uscita.",
+            discTitle: "Architettura e Arte",
+            discText: "Con 1.300 stanze, il palazzo vantava sistemi di drenaggio avanzati e splendidi affreschi come il 'Principe dei Gigli'.",
+            caption: "Il Palazzo di Cnosso, ingresso nord",
+            footer: "Creta - Dove la leggenda incontra la storia."
+        }
+    };
+
+    function setLanguage(lang) {
+        // Update content
+        document.getElementById('main-title').innerText = data[lang].title;
+        document.getElementById('intro').innerText = data[lang].intro;
+        document.getElementById('title-labyrinth').innerText = data[lang].labTitle;
+        document.getElementById('text-labyrinth').innerText = data[lang].labText;
+        document.getElementById('title-discovery').innerText = data[lang].discTitle;
+        document.getElementById('text-discovery').innerText = data[lang].discText;
+        document.getElementById('image-caption').innerText = data[lang].caption; // Update caption
+        document.getElementById('footer-text').innerText = data[lang].footer;
+
+        // Update active flag UI
+        document.querySelectorAll('.flag').forEach(f => f.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+
+    // Initialize with English
+    setLanguage('en');
+</script>
+
+</body>
+</html>
