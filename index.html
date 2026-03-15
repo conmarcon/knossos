@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knossos - The Palace of Legends</title>
+    <title>Knossos - Digital Guide with Sound</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         :root {
             --knossos-red: #8b0000;
             --parchment: #fdf5e6;
-            --stone: #4a4a4a;
+            --stone: #3a3a3a;
             --gold: #c5a059;
         }
 
         body {
-            background-color: #1a1a1a;
+            background-color: #121212;
             color: var(--stone);
             font-family: 'Lora', serif;
             margin: 0;
@@ -25,225 +25,251 @@
 
         .museum-card {
             background-color: var(--parchment);
-            max-width: 600px;
-            width: 92%;
-            margin: 20px auto;
-            padding: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-            border: 1px solid var(--gold);
+            max-width: 500px;
+            width: 100%;
+            min-height: 100vh;
+            padding: 25px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            border-left: 1px solid var(--gold);
+            border-right: 1px solid var(--gold);
+            box-sizing: border-box;
             position: relative;
-        }
-
-        /* Διακοσμητική γωνία */
-        .museum-card::before {
-            content: '';
-            position: absolute;
-            top: 8px; left: 8px; right: 8px; bottom: 8px;
-            border: 1px solid var(--gold);
-            pointer-events: none;
-            opacity: 0.5;
         }
 
         header {
             text-align: center;
             border-bottom: 2px solid var(--knossos-red);
             padding-bottom: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         h1 {
             font-family: 'Cinzel', serif;
             color: var(--knossos-red);
             margin: 0;
-            font-size: 1.6rem;
+            font-size: 1.3rem;
             letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .language-switcher {
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 15px;
             margin-top: 15px;
         }
 
         .flag {
-            font-size: 26px;
+            font-size: 24px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            filter: grayscale(80%);
+            filter: grayscale(100%);
+            transition: 0.3s;
             opacity: 0.6;
         }
 
-        .flag:hover, .flag.active {
-            transform: scale(1.2) translateY(-3px);
+        .flag.active {
             filter: grayscale(0%);
+            transform: scale(1.2);
             opacity: 1;
         }
 
-        /* Πλαίσιο Εικόνας */
-        .image-box {
-            width: 100%;
-            background: #eee;
-            margin: 20px 0;
-            border: 4px solid white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            overflow: hidden;
-            min-height: 200px;
+        /* MENU BUTTONS */
+        #main-menu {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        .image-box img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* Αν η εικόνα λείπει, δείξε αυτό το κείμενο */
-        .image-box:empty::after {
-            content: "The Palace of Knossos";
+        .menu-btn {
+            background-color: white;
+            border: 1px solid var(--gold);
+            padding: 22px;
             font-family: 'Cinzel', serif;
-            color: #ccc;
-        }
-
-        .caption {
-            font-size: 0.85rem;
+            color: var(--knossos-red);
             text-align: center;
-            font-style: italic;
-            color: #666;
-            margin-top: -10px;
-            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .content-section {
-            line-height: 1.7;
-            text-align: justify;
+        .menu-btn:active {
+            transform: scale(0.98);
+            background-color: #eee;
+        }
+
+        /* CONTENT SECTIONS */
+        .content-view {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         h2 {
             font-family: 'Cinzel', serif;
             color: var(--knossos-red);
-            font-size: 1.1rem;
-            margin-top: 25px;
-            border-bottom: 1px solid #ddd;
+            font-size: 1.2rem;
+            border-bottom: 1px solid var(--gold);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        p {
+            line-height: 1.8;
+            text-align: justify;
+            font-size: 1.05rem;
+        }
+
+        .back-btn {
+            margin-top: 40px;
+            padding: 18px;
+            background-color: var(--stone);
+            color: var(--parchment);
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border: 2px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin-bottom: 25px;
         }
 
         .footer {
-            margin-top: 40px;
+            margin-top: 60px;
             text-align: center;
-            font-size: 0.85rem;
-            border-top: 1px solid var(--gold);
-            padding-top: 15px;
-            color: #888;
+            font-size: 0.7rem;
+            color: #999;
+            font-family: 'Cinzel', serif;
+            border-top: 1px solid rgba(197, 160, 89, 0.3);
+            padding-top: 20px;
         }
     </style>
 </head>
 <body>
 
+<audio id="stoneSound" preload="auto">
+    <source src="https://www.soundjay.com/nature/sounds/rock-hit-1.mp3" type="audio/mpeg">
+</audio>
+
 <div class="museum-card">
     <header>
-        <h1 id="main-title">Knossos</h1>
+        <h1 id="main-title">Knossos Guide</h1>
         <div class="language-switcher">
-            <span class="flag active" onclick="setLanguage('en', this)">🇬🇧</span>
-            <span class="flag" onclick="setLanguage('el', this)">🇬🇷</span>
-            <span class="flag" onclick="setLanguage('de', this)">🇩🇪</span>
-            <span class="flag" onclick="setLanguage('fr', this)">🇫🇷</span>
-            <span class="flag" onclick="setLanguage('it', this)">🇮🇹</span>
+            <span class="flag active" onclick="changeLang('en', this)">🇬🇧</span>
+            <span class="flag" onclick="changeLang('el', this)">🇬🇷</span>
+            <span class="flag" onclick="setLanguageShortcut('de', this)">🇩🇪</span>
+            <span class="flag" onclick="setLanguageShortcut('fr', this)">🇫🇷</span>
+            <span class="flag" onclick="setLanguageShortcut('it', this)">🇮🇹</span>
         </div>
     </header>
 
-    <div class="image-box">
-        <img src="knossos.jpg" 
-             alt="Knossos Palace" 
-             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'padding:40px; color:#999; font-family:Cinzel\'>The Palace of Knossos</div>'">
-    </div>
-    <div class="caption" id="img-caption">The North Entrance of the Palace</div>
-
-    <div class="content-section">
-        <p id="intro" style="font-weight: bold; color: var(--knossos-red);"></p>
-        
-        <h2 id="h2-lab">The Labyrinth</h2>
-        <p id="p-lab"></p>
-
-        <h2 id="h2-disc">The Legend</h2>
-        <p id="p-disc"></p>
+    <div id="main-menu">
+        <img src="https://images.unsplash.com/photo-1605101101291-56c6d64c740a?auto=format&fit=crop&w=600&q=80" class="hero-img">
+        <div class="menu-btn" onclick="openSection('arch')" id="btn-arch">Architecture</div>
+        <div class="menu-btn" onclick="openSection('sea')" id="btn-sea">The Sea Lords</div>
+        <div class="menu-btn" onclick="openSection('myth')" id="btn-myth">The Labyrinth</div>
+        <div class="menu-btn" onclick="openSection('end')" id="btn-end">The Mystery</div>
     </div>
 
-    <div class="footer" id="foot">
-        Knossos Heritage Site | Crete
+    <div id="content-view" class="content-view">
+        <h2 id="view-title"></h2>
+        <p id="view-text"></p>
+        <div class="back-btn" onclick="closeSection()" id="btn-back">← Back to Menu</div>
+    </div>
+
+    <div class="footer">
+        KNOSSOS • CRETE • EST. 1900 BC
     </div>
 </div>
 
 <script>
-    const translations = {
-        en: {
-            title: "Knossos: Palace of Legends",
-            caption: "The North Entrance of the Palace",
-            intro: "Welcome to the center of the Minoan world, the oldest city in Europe.",
-            labT: "The Labyrinth",
-            labP: "Myth says Daedalus built a maze for King Minos to hide the Minotaur. Only Theseus escaped with Ariadne's thread.",
-            discT: "Historical Significance",
-            discP: "Knossos was the seat of power for the first advanced civilization of the West, dating back to 1900 BC.",
-            foot: "Knossos Heritage Site | Crete"
-        },
-        el: {
-            title: "Κνωσός: Το Παλάτι των Θρύλων",
-            caption: "Η Βόρεια Είσοδος του Ανακτόρου",
-            intro: "Καλώς ήρθατε στο κέντρο του Μινωικού κόσμου, την αρχαιότερη πόλη της Ευρώπης.",
-            labT: "Ο Λαβύρινθος",
-            labP: "Ο μύθος λέει ότι ο Δαίδαλος έχτισε ένα λαβύρινθο για τον Μινώταυρο. Μόνο ο Θησέας δραπέτευσε με τον Μίτο της Αριάδνης.",
-            discT: "Ιστορική Σημασία",
-            discP: "Η Κνωσός ήταν η έδρα της εξουσίας για τον πρώτο προηγμένο πολιτισμό της Δύσης, ήδη από το 1900 π.Χ.",
-            foot: "Αρχαιολογικός Χώρος Κνωσού | Κρήτη"
-        },
-        de: {
-            title: "Knossos: Palast der Legenden",
-            caption: "Der Nordeingang des Palastes",
-            intro: "Willkommen im Zentrum der minoischen Welt, der ältesten Stadt Europas.",
-            labT: "Das Labyrinth",
-            labP: "Die Legende besagt, dass Daedalus ein Labyrinth für den Minotaurus baute. Nur Theseus entkam mit Ariadnes Faden.",
-            discT: "Historische Bedeutung",
-            discP: "Knossos war der Machtsitz der ersten Hochkultur des Westens, die bis 1900 v. Chr. zurückreicht.",
-            foot: "Erbe von Knossos | Kreta"
-        },
-        fr: {
-            title: "Cnossos : Le Palais des Légendes",
-            caption: "L'entrée nord du palais",
-            intro: "Bienvenue au centre du monde minoen, la plus ancienne ville d'Europe.",
-            labT: "Le Labyrinthe",
-            labP: "Le mythe raconte que Dédale a construit un labyrinthe pour le Minotaure. Seul Thésée s'est échappé grâce au fil d'Ariane.",
-            discT: "Signification Historique",
-            discP: "Cnossos était le siège du pouvoir de la première civilisation avancée de l'Occident, datant de 1900 avant J.-C.",
-            foot: "Site du patrimoine de Cnossos | Crète"
-        },
-        it: {
-            title: "Cnosso: Il Palazzo delle Leggende",
-            caption: "L'ingresso nord del palazzo",
-            intro: "Benvenuti nel centro del mondo minoico, la città più antica d'Europa.",
-            labT: "Il Labirinto",
-            labP: "Il mito dice che Dedalo costruì un labirinto per il Minotauro. Solo Teseo fuggì con il filo di Arianna.",
-            discT: "Significato Storico",
-            discP: "Cnosso era la sede del potere della prima civiltà avanzata dell'Occidente, risalente al 1900 a.C.",
-            foot: "Sito del patrimonio di Cnosso | Creta"
-        }
-    };
+    let currentLang = 'en';
+    const clickSound = document.getElementById('stoneSound');
 
-    function setLanguage(lang, element) {
-        document.getElementById('main-title').innerText = translations[lang].title;
-        document.getElementById('img-caption').innerText = translations[lang].caption;
-        document.getElementById('intro').innerText = translations[lang].intro;
-        document.getElementById('h2-lab').innerText = translations[lang].labT;
-        document.getElementById('p-lab').innerText = translations[lang].labP;
-        document.getElementById('h2-disc').innerText = translations[lang].discT;
-        document.getElementById('p-disc').innerText = translations[lang].discP;
-        document.getElementById('foot').innerText = translations[lang].foot;
-
-        document.querySelectorAll('.flag').forEach(f => f.classList.remove('active'));
-        element.classList.add('active');
+    // Λειτουργία αναπαραγωγής ήχου
+    function playStone() {
+        clickSound.currentTime = 0; // Επαναφορά στην αρχή για γρήγορα κλικ
+        clickSound.play();
     }
 
-    setLanguage('en', document.querySelector('.flag'));
+    const data = {
+        en: {
+            mainTitle: "Knossos: Digital Guide",
+            btnBack: "← Back to Menu",
+            sections: {
+                arch: { title: "The Architectural Marvel", text: "The Palace featured 1,300 rooms, multi-story engineering, and the world's first advanced drainage systems.", btn: "Architecture" },
+                sea: { title: "Thalassocracy: Sea Lords", text: "The Minoans dominated Mediterranean trade through their superior naval fleet, needing no defensive walls.", btn: "The Sea Lords" },
+                myth: { title: "The Bull & Labyrinth", text: "Sacred bull-leaping rituals inspired the myth of the Minotaur hidden within King Minos's complex maze.", btn: "The Labyrinth" },
+                end: { title: "The Radiant Eclipse", text: "Around 1450 BC, the civilization faced a sudden end. Volcanic eruptions or invasions? The mystery remains.", btn: "The Mystery" }
+            }
+        },
+        el: {
+            mainTitle: "Κνωσός: Ψηφιακός Οδηγός",
+            btnBack: "← Επιστροφή στο Μενού",
+            sections: {
+                arch: { title: "Αρχιτεκτονικό Θαύμα", text: "Το Ανάκτορο διέθετε 1.300 δωμάτια, πολυώροφα κτίρια και τα πρώτα εξελιγμένα συστήματα αποχέτευσης.", btn: "Η Αρχιτεκτονική" },
+                sea: { title: "Θαλασσοκρατία", text: "Οι Μινωίτες κυριαρχούσαν στο εμπόριο της Μεσογείου χάρη στον πανίσχυρο στόλο τους, χωρίς την ανάγκη τειχών.", btn: "Οι Θαλασσοκράτορες" },
+                myth: { title: "Ο Ταύρος & Ο Λαβύρινθος", text: "Τα ιερά Ταυροκαθάψια ενέπνευσαν τον μύθο του Μινώταυρου που ζούσε στον δαιδαλώδη Λαβύρινθο.", btn: "Ο Λαβύρινθος" },
+                end: { title: "Το Μυστήριο του Τέλους", text: "Γύρω στο 1450 π.Χ., ο πολιτισμός παρήκμασε απότομα. Ηφαιστειακές εκρήξεις ή εισβολές; Το αίνιγμα παραμένει.", btn: "Το Μυστήριο" }
+            }
+        },
+        de: { mainTitle: "Knossos: Guide", btnBack: "← Zurück", sections: { arch: {title:"Architektur", text:"1.300 Zimmer und Abwassersysteme.", btn:"Architektur"}, sea: {title:"Seemacht", text:"Herren des Mittelmeers.", btn:"Seemacht"}, myth: {title:"Labyrinth", text:"Minotaurus Legende.", btn:"Labyrinth"}, end: {title:"Das Ende", text:"Rätselhafter Untergang.", btn:"Rätsel"} } },
+        fr: { mainTitle: "Cnossos: Guide", btnBack: "← Retour", sections: { arch: {title:"Architecture", text:"Un palais de 1 300 pièces.", btn:"Architecture"}, sea: {title:"Maîtres des Mers", text:"Thalassocratie Minoenne.", btn:"Mer"}, myth: {title:"Labyrinthe", text:"La légende du Minotaure.", btn:"Labyrinthe"}, end: {title:"Le Mystère", text:"La fin subite de Cnossos.", btn:"Mystère"} } },
+        it: { mainTitle: "Cnosso: Guida", btnBack: "← Indietro", sections: { arch: {title:"Architettura", text:"Palazzo di 1.300 stanze.", btn:"Architettura"}, sea: {title:"Signori del Mare", text:"Potenza navale minoica.", btn:"Mare"}, myth: {title:"Il Labirinto", text:"Il mito del Minotauro.", btn:"Labirinto"}, end: {title:"Il Mistero", text:"La fine della civiltà.", btn:"Mistero"} } }
+    };
+
+    function changeLang(lang, el) {
+        currentLang = lang;
+        document.querySelectorAll('.flag').forEach(f => f.classList.remove('active'));
+        el.classList.add('active');
+        
+        document.getElementById('main-title').innerText = data[lang].mainTitle;
+        document.getElementById('btn-back').innerText = data[lang].btnBack;
+        document.getElementById('btn-arch').innerText = data[lang].sections.arch.btn;
+        document.getElementById('btn-sea').innerText = data[lang].sections.sea.btn;
+        document.getElementById('btn-myth').innerText = data[lang].sections.myth.btn;
+        document.getElementById('btn-end').innerText = data[lang].sections.end.btn;
+    }
+
+    function setLanguageShortcut(lang, el) {
+        playStone();
+        changeLang(lang, el);
+    }
+
+    function openSection(id) {
+        playStone();
+        document.getElementById('main-menu').style.display = 'none';
+        const view = document.getElementById('content-view');
+        view.style.display = 'block';
+        
+        document.getElementById('view-title').innerText = data[currentLang].sections[id].title;
+        document.getElementById('view-text').innerText = data[currentLang].sections[id].text;
+    }
+
+    function closeSection() {
+        playStone();
+        document.getElementById('content-view').style.display = 'none';
+        document.getElementById('main-menu').style.display = 'flex';
+    }
+
+    // Αρχικοποίηση
+    changeLang('en', document.querySelector('.flag'));
 </script>
 
 </body>
